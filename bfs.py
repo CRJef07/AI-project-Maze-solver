@@ -45,7 +45,7 @@ class Grafo:
 
             if (x, y) == self.nodo_final:
                 camino_resultado = camino
-                self.imprimir_consola(camino)
+                # self.imprimir_consola(camino)
                 break
 
             visitado[x, y] = True
@@ -54,28 +54,29 @@ class Grafo:
 
             for vecino_x, vecino_y in vecinos:
                 if (
-                    0 <= vecino_x < self.filas
-                    and 0 <= vecino_y < self.columnas
-                    and not visitado[vecino_x, vecino_y]
-                    and self.grafo[vecino_x, vecino_y] != 1
+                        0 <= vecino_x < self.filas
+                        and 0 <= vecino_y < self.columnas
+                        and not visitado[vecino_x, vecino_y]
+                        and self.grafo[vecino_x, vecino_y] != 1
                 ):
                     queue.append(((vecino_x, vecino_y), camino + [(x, y)]))
 
-        if camino_resultado:
+        if camino_resultado is not None:
+            self.imprimir_consola(camino_resultado)
             self.guardar_camino_en_csv(camino_resultado)
         else:
             print("No se encontró un camino correcto")
 
-
-    def imprimir_consola(self, path):
+    def imprimir_consola(self, ruta):
+        print("Ruta mínima encontrada:")
         for i in range(self.filas):
             for j in range(self.columnas):
                 if (i, j) == self.nodo_inicio:
                     print("2", end=" ")
                 elif (i, j) == self.nodo_final:
                     print("3", end=" ")
-                elif (i, j) in path:
-                    print("4", end=" ")
+                elif (i, j) in ruta:
+                    print("5", end=" ")
                 else:
                     print("0" if self.grafo[i, j] == 0 else "1", end=" ")
             print()
@@ -103,6 +104,7 @@ class Grafo:
             writer.writerow([f"Tiempo de ejecucion: {duracion:.6f} segundos"])
             writer.writerow([f"Uso de memoria: {memoria:.2f} MB"])
 
+
 def ejecutar():
     algoritmo = Grafo("laberinto.csv")
     tiempo_inicio: float = time.time()
@@ -114,14 +116,6 @@ def ejecutar():
     print(f"Uso de memoria: {memoria:.2f} MB")
     algoritmo.guardar_tiempo_memoria(duracion, memoria)
 
-# if __name__ == "__main__":
-#     grafo = Grafo("laberinto.csv")
-#     tiempo_inicio: float = time.time()
-#     grafo.bfs()
-#     tiempo_final: float = time.time()
-#
-#     duracion = tiempo_final - tiempo_inicio
-#     memory_usage = psutil.Process().memory_info().rss / 1024 / 1024
-#
-#     print(f"Tiempo de ejecución: {duracion:.6f} segundos")
-#     print(f"Uso de memoria: {memory_usage:.2f} MB")
+
+if __name__ == '__main__':
+    ejecutar()
