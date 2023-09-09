@@ -9,6 +9,7 @@ class Laberinto:
     def __init__(self, nombre_archivo):
         self.matriz = self.leer_archivo(nombre_archivo)
         self.filas, self.columnas = self.matriz.shape
+
     def leer_archivo(self, archivo):
         with open(archivo, 'r') as archivocsv:
             leer_archivo = csv.reader(archivocsv)
@@ -65,34 +66,31 @@ def ejecutar():
 
     dijkstra = Dijkstra(laberinto)
 
-    # Llama a dijkstra.solve una vez y almacena el resultado
     camino = dijkstra.resolver(inicio, fin)
 
     if camino is None:
         print("No hay ruta válida desde el punto de inicio al punto final.")
         return
 
-    # Medir el tiempo de ejecución con timeit
     tiempo_ejecucion = timeit.timeit(lambda: dijkstra.resolver(inicio, fin), number=1)
 
     print(f"Camino desde {inicio} hasta {fin}:")
     print(camino)
     print("Laberinto con ruta mínima:")
     for fila, columna in camino:
-        laberinto.matriz[fila][columna] = 4
+        laberinto.matriz[fila][columna] = 5
     laberinto.imprimir_laberinto()
 
-    uso_memoria = psutil.Process().memory_info().rss / 1024 / 1024  # Obtener uso de memoria en megabytes
+    uso_memoria = psutil.Process().memory_info().rss / 1024 / 1024
 
     print(f"Tiempo de ejecución: {tiempo_ejecucion:.6f} segundos")
     print(f"Uso de memoria: {uso_memoria:.2f} MB")
 
-    # Guardar la matriz resultante en result_matrix.csv
     with open("dijkstra_output/output.csv", 'w', newline='') as csvfile:
         escritor = csv.writer(csvfile, delimiter=' ')
         for fila in laberinto.matriz:
             escritor.writerow(fila)
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    ejecutar()
