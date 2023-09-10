@@ -90,6 +90,10 @@ def ejecutar():
         escritor = csv.writer(csvfile, delimiter=' ')
         for fila in laberinto.matriz:
             escritor.writerow(fila)
+        escritor.writerow("")
+        # Guardar estadísticas de tiempo y memoria
+        escritor.writerow(["Tiempo de Ejecucion:", tiempo_ejecucion])
+        escritor.writerow(["Uso de Memoria:", uso_memoria])
 
 
 if __name__ == "__main__":
