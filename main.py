@@ -20,6 +20,7 @@ def menu():
     print("2. Algoritmo Dijkstra")
     print("3. Algoritmo A*")
     print("4. Algoritmo DFS - Depth First Search")
+    print("5. Algoritmo Bellman Ford")
     print("77. Salir")
 
 
