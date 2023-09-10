@@ -117,7 +117,7 @@ def ejecutar():
     laberinto_con_camino_optimo = [fila[:] for fila in laberinto]
 
     for fila, col in camino_optimo:
-        laberinto_con_camino_optimo[fila][col] = 4
+        laberinto_con_camino_optimo[fila][col] = 5
 
     # Generar dos caminos aleatorios
     random.seed(42)  # Semilla para reproducibilidad
@@ -148,7 +148,7 @@ def ejecutar():
         # Guardar estadísticas de tiempo y memoria
         escritor.writerow(["Tiempo de Ejecucion:", tiempo_ejecucion_optimo])
         escritor.writerow(["Uso de Memoria:", uso_memoria_optimo])
-#
-#
-# if __name__ == "__main__":
-#     main()
+
+
+if __name__ == "__main__":
+    ejecutar()
