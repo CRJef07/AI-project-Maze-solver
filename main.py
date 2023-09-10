@@ -4,6 +4,7 @@ import bfs
 import dijkstra
 import a_star
 import dfs
+import bellman_ford
 
 
 def limpiar_consola():
@@ -48,10 +49,10 @@ def main():
         elif opc == "4":  # Depth First Search
             dfs.ejecutar()
             os.system("pause")
-            pass
 
         elif opc == "5":  # Bellman – Ford
-            pass
+            bellman_ford.ejecutar()
+            os.system("pause")
 
         elif opc == "77":
             print("¡¡Hasta luego!!")
