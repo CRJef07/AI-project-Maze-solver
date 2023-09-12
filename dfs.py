@@ -3,6 +3,7 @@ import time
 
 import numpy
 import psutil
+from memory_profiler import profile
 
 
 class Grafo:
@@ -31,6 +32,7 @@ class Grafo:
             leer_archivo = csv.reader(archivocsv)
             return numpy.array([[int(cell) for cell in row] for row in leer_archivo])
 
+    # @profile
     def dfs(self):
         if self.nodo_inicio is None or self.nodo_final is None:
             self.inicializar_nodos()

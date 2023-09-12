@@ -2,6 +2,7 @@ import csv
 import time
 import numpy
 import psutil
+from memory_profiler import profile
 
 
 class Grafo:
@@ -30,6 +31,7 @@ class Grafo:
         self.nodo_inicio = nodo_inicio
         self.nodo_final = nodo_final
 
+    # @profile
     def bellman_ford(self):
         if self.nodo_inicio is None or self.nodo_final is None:
             self.inicializar_nodos()

@@ -3,6 +3,7 @@ import networkx as nx
 import numpy
 import psutil
 import timeit
+from memory_profiler import profile
 
 
 class Laberinto:
@@ -27,6 +28,7 @@ class Dijkstra:
     def __init__(self, laberinto):
         self.laberinto = laberinto
 
+    # @profile
     def resolver(self, inicio, fin):
         G = nx.Graph()
         for fila in range(self.laberinto.filas):

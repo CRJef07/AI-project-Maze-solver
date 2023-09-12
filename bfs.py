@@ -45,7 +45,6 @@ class Grafo:
 
             if (x, y) == self.nodo_final:
                 camino_resultado = camino
-                # self.imprimir_consola(camino)
                 break
 
             visitado[x, y] = True

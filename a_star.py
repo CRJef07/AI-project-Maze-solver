@@ -4,6 +4,7 @@ import timeit
 import numpy
 import psutil
 import random
+from memory_profiler import profile
 
 
 class Nodo:
@@ -40,7 +41,7 @@ def imprimir_laberinto(laberinto):
 def es_valido(laberinto, fila, col):
     return 0 <= fila < len(laberinto) and 0 <= col < len(laberinto[0]) and laberinto[fila][col] != 1
 
-
+# @profile
 def astar(laberinto, inicio, fin):
     lista_abierta = []
     conjunto_cerrado = set()
