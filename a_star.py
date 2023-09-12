@@ -10,9 +10,8 @@ class Nodo:
     def __init__(self, posicion, padre=None):
         self.posicion = posicion
         self.padre = padre
-        self.costo_desde_inicio = 0  # Costo desde el nodo de inicio hasta este nodo
-        self.heuristica = 0  # Costo estimado desde este nodo hasta el nodo objetivo
-        self.costo_total = 0  # Costo total (f = g + h)
+        self.costo_desde_inicio = 0
+        self.heuristica = 0
 
     def __lt__(self, otro):
         return self.costo_total < otro.costo_total
@@ -60,7 +59,7 @@ def astar(laberinto, inicio, fin):
                 nodo_actual = nodo_actual.padre
             return camino[::-1]
 
-        vecinos = [(0, 1), (0, -1), (1, 0), (-1, 0)]  # Movimientos arriba, abajo, izquierda, derecha
+        vecinos = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         for vecino in vecinos:
             nueva_posicion = (nodo_actual.posicion[0] + vecino[0], nodo_actual.posicion[1] + vecino[1])
 
@@ -86,7 +85,7 @@ def astar(laberinto, inicio, fin):
 
 
 def ejecutar():
-    laberinto = leer_archivo('laberinto.csv')  # Reemplaza con el nombre de tu archivo CSV
+    laberinto = leer_archivo('laberinto.csv')
     inicio = None
     fin = None
 
@@ -102,10 +101,9 @@ def ejecutar():
         print("No se encontraron puntos de inicio o fin en el laberinto.")
         return
 
-    # Medir el tiempo de ejecución usando timeit
     tiempo_ejecucion_optimo = timeit.timeit(lambda: astar(laberinto, inicio, fin), number=1)
 
-    uso_memoria_optimo = psutil.Process().memory_info().rss / 1024 / 1024  # Obtener el uso de memoria en megabytes
+    uso_memoria_optimo = psutil.Process().memory_info().rss / 1024 / 1024
 
     camino_optimo = astar(laberinto, inicio, fin)
 
@@ -113,39 +111,25 @@ def ejecutar():
         print("No hay un camino válido desde el punto de inicio hasta el punto de fin.")
         return
 
-    # Crear una copia del laberinto para mostrar el camino óptimo
     laberinto_con_camino_optimo = [fila[:] for fila in laberinto]
 
     for fila, col in camino_optimo:
         laberinto_con_camino_optimo[fila][col] = 5
 
-    # Generar dos caminos aleatorios
-    random.seed(42)  # Semilla para reproducibilidad
-    inicio_aleatorio = (random.randint(0, len(laberinto) - 1), random.randint(0, len(laberinto[0]) - 1))
-    fin_aleatorio = (random.randint(0, len(laberinto) - 1), random.randint(0, len(laberinto[0]) - 1))
+    random.seed(42)
 
-    camino_aleatorio1 = astar(laberinto, inicio_aleatorio, fin_aleatorio)
-
-    # Asegurarse de que los caminos aleatorios sean válidos
-
-    # Mostrar los caminos
     print("El mejor camino es:")
     imprimir_laberinto(laberinto_con_camino_optimo)
 
     print(f"\nTiempo de Ejecución: {tiempo_ejecucion_optimo:.6f} segundos")
     print(f"Uso de Memoria: {uso_memoria_optimo:.2f} MB")
 
-    # Guardar las tres matrices y sus estadísticas en un solo archivo CSV
-
     with open("a_star_output/output.csv", 'w', newline='') as csvfile:
         escritor = csv.writer(csvfile, delimiter=' ')
 
-        # Guardar el camino óptimo
-        # escritor.writerow(["Camino Óptimo"])
         for fila in laberinto_con_camino_optimo:
             escritor.writerow(fila)
         escritor.writerow("")
-        # Guardar estadísticas de tiempo y memoria
         escritor.writerow(["Tiempo de Ejecucion:", tiempo_ejecucion_optimo])
         escritor.writerow(["Uso de Memoria:", uso_memoria_optimo])
 
